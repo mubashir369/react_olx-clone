@@ -1,16 +1,16 @@
-import React,{useContext} from 'react';
-import './Header.css';
-import { useHistory } from 'react-router-dom';
-import OlxLogo from '../../assets/OlxLogo';
-import Search from '../../assets/Search';
-import Arrow from '../../assets/Arrow';
-import SellButton from '../../assets/SellButton';
-import SellButtonPlus from '../../assets/SellButtonPlus';
-import { AuthContext, FirebaseContext } from '../../store/FirebaseContext';
+import React, { useContext } from "react";
+import "./Header.css";
+import { useHistory } from "react-router-dom";
+import OlxLogo from "../../assets/OlxLogo";
+import Search from "../../assets/Search";
+import Arrow from "../../assets/Arrow";
+import SellButton from "../../assets/SellButton";
+import SellButtonPlus from "../../assets/SellButtonPlus";
+import { AuthContext, FirebaseContext } from "../../store/FirebaseContext";
 function Header() {
-  const history=useHistory()
-  const {user}=useContext(AuthContext)
-  const {firebase} =useContext(FirebaseContext)
+  const history = useHistory();
+  const { user } = useContext(AuthContext);
+  const { firebase } = useContext(FirebaseContext);
   return (
     <div className="headerParentDiv">
       <div className="headerChildDiv">
@@ -38,19 +38,37 @@ function Header() {
           <Arrow></Arrow>
         </div>
         <div className="loginPage">
-          <span>{user?user.displayName:"Login"}</span>
+          <span
+            onClick={() => {
+              history.push("/login");
+            }}
+          >
+            {user ? user.displayName : "Login"}
+          </span>
           <hr />
         </div>
-        {user&& <span onClick={()=>{
-          firebase.auth().signOut()
-          history.push('/login')
-        }}>Log Out</span>}
+        {user && (
+          <span
+            onClick={() => {
+              firebase.auth().signOut();
+              history.push("/login");
+            }}
+          >
+            Log Out
+          </span>
+        )}
 
         <div className="sellMenu">
           <SellButton></SellButton>
           <div className="sellMenuContent">
             <SellButtonPlus></SellButtonPlus>
-            <span>SELL</span>
+            <span
+              onClick={() => {
+                history.push("/create");
+              }}
+            >
+              SELL
+            </span>
           </div>
         </div>
       </div>
